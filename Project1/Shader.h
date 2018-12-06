@@ -10,6 +10,7 @@
 class Shader
 {
 public:
+	//The OpenGL ID for this shader
 	unsigned int ID;
 
 	Shader(const char * vertexPath, const char * fragmentPath);
