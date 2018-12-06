@@ -46,7 +46,7 @@ int main()
 	Plane.createPlane();
 
 	//Create all physics objects for the current scene
-	PhysObject PhysPlane(&Plane);
+	PhysObject PhysPlane(&Plane,glm::vec3(-0.5,0,0));
 	
 	//Render Loop
 	while (!glfwWindowShouldClose(window))
@@ -56,7 +56,8 @@ int main()
 		//Clear the screen
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		PhysPlane.applyForce(glm::vec3(.00001,0,0));
+		PhysPlane.physUpdate(17);
 		//Draw all of the Physics objects
 		PhysPlane.draw();
 
