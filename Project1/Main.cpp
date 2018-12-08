@@ -38,15 +38,17 @@ int main()
 		return -1;
 	}
 
+	glEnable(GL_DEPTH_TEST);
+
 	//Create and compile shader
 	Shader ourShader("vShader.vs", "fShader.fs");
 
 	//Create plane mesh to be used for rendering
 	Mesh Plane(&ourShader);
-	Plane.createPlane();
+	Plane.createSphere();
 
 	//Create all physics objects for the current scene
-	PhysObject PhysPlane(&Plane,glm::vec3(-0.5,0,0));
+	PhysObject PhysPlane(&Plane,glm::vec3(-0.5,0,0),0.5,glm::vec3(1,0.6,1));
 	
 	//Render Loop
 	while (!glfwWindowShouldClose(window))
@@ -55,8 +57,8 @@ int main()
 
 		//Clear the screen
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-		PhysPlane.applyForce(glm::vec3(.00001,0,0));
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		PhysPlane.applyForce(glm::vec3(.0001, 0, 0));
 		PhysPlane.physUpdate(17);
 		//Draw all of the Physics objects
 		PhysPlane.draw();

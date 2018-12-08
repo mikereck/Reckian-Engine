@@ -34,7 +34,7 @@ void PhysObject::physUpdate(float timeInMS)
 
 void PhysObject::applyForce(glm::vec3 Force)
 {
-	m_force = Force;
+	m_force += Force;
 }
 
 

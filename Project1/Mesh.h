@@ -29,6 +29,7 @@ private:
 
 	//Vertex Buffer for this mesh
 	Buffer* VBO;
+	Buffer* NBO;
 
 	//Element Buffer for this mesh
 	IndexBuffer* EBO;

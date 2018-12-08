@@ -16,6 +16,8 @@ void VertexArray::AttachBuffer(Buffer* buffer, GLuint index)
 	Bind();
 	buffer->Bind();
 
+	//std::cout << "Attaching Buffer to " << index << std::endl;
+
 	//Attach the buffer to the provided index
 	glEnableVertexAttribArray(index);
 	glVertexAttribPointer(index, buffer->getNumComponents(), GL_FLOAT, GL_FALSE, 0, 0);

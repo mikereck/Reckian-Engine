@@ -8,6 +8,8 @@ Buffer::Buffer(GLfloat * data, unsigned int count, GLuint numComponents)
 	glGenBuffers(1, &m_ID);
 	glBindBuffer(GL_ARRAY_BUFFER, m_ID);
 
+	//std::cout << "Creating a Buffer with " << numComponents << " components and " << count << " items with ID" << m_ID <<std::endl;
+
 	//Store provided data in the provided buffer
 	glBufferData(GL_ARRAY_BUFFER, count * numComponents * sizeof(float), data, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

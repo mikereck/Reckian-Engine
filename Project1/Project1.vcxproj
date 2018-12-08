@@ -127,6 +127,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="PhysObject.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="VertexArray.cpp" />
   </ItemGroup>
@@ -135,9 +136,16 @@
     <ClInclude Include="BufferInclude.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="OBJ_Loader.h" />
     <ClInclude Include="PhysObject.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="VertexArray.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Sphere.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
