@@ -20,7 +20,7 @@ public:
 	void createSphere();
 
 	//Draw the mesh to the screen
-	void draw(glm::vec3 color, glm::vec3 position, glm::vec3 scale);
+	void draw(glm::vec3 color, glm::vec3 position, glm::vec3 scale, glm::mat4 viewMatrix, glm::mat4 perMatrix);
 	~Mesh();
 private:
 	Shader* m_shader;

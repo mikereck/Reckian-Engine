@@ -1,14 +1,18 @@
 #include "Shader.h"
 #include "Mesh.h"
 #include "PhysObject.h"
+#include "Scene.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow* window, int w, int h);
 void ProcessInput(GLFWwindow* window);
+
+float width;
+float height;
 
 
 int main()
@@ -20,7 +24,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	//Create Window
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Testing 123", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(800, 800, "Testing 123", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window";
@@ -28,6 +32,8 @@ int main()
 		return -1;
 	}
 	//Make the new window the current OpenGL Context
+	width = 800;
+	height = 800;
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
@@ -48,7 +54,29 @@ int main()
 	Plane.createSphere();
 
 	//Create all physics objects for the current scene
-	PhysObject PhysPlane(&Plane,glm::vec3(-0.5,0,0),0.5,glm::vec3(1,0.6,1));
+	//PhysObject PhysPlane(&Plane, glm::vec3(1, 0.6, 1),glm::vec3(-10,0,0));
+
+	//1,0.6,1
+
+	Scene myScene(&ourShader, glm::vec3(0,0,0), 0.025);
+	
+	myScene.addPhysObj(&Plane, glm::vec3(0.75, 0, 0), glm::vec3(10, 0, 0));
+	myScene.addPhysObj(&Plane, glm::vec3(0.5, 0.5, 0.5), glm::vec3(-10, 0, 0));
+	myScene.addPhysObj(&Plane, glm::vec3(0, 0.75, 0), glm::vec3(10, 10, 0));
+	myScene.addPhysObj(&Plane, glm::vec3(0, 0, 0.75), glm::vec3(-10, -10, 0));
+	myScene.addPhysObj(&Plane, glm::vec3(0, 0.75, 0.75), glm::vec3(-10, 10, 0));
+	myScene.addPhysObj(&Plane, glm::vec3(0.75, 0, 0.75), glm::vec3(10, -10, 0));
+	myScene.addPhysObj(&Plane, glm::vec3(1, 0.6, 1), glm::vec3(0, 0, -10));
+	myScene.addPhysObj(&Plane, glm::vec3(1, 0.6, 0.6), glm::vec3(0, 0, 10));
+	myScene.addPhysObj(&Plane, glm::vec3(1, 0.6, 0.25), glm::vec3(10, 10, -10));
+	myScene.addPhysObj(&Plane, glm::vec3(0.6, 1, 1), glm::vec3(-10, -10, 10));
+	
+	/* COOL LAYOUT!
+	myScene.addPhysObj(&Plane, glm::vec3(.75, 0, 0), glm::vec3(-10, 0, 0),1,1,glm::vec3(0,1.75*.1125,0));
+	myScene.addPhysObj(&Plane, glm::vec3(0.5, 0.5, 0.5), glm::vec3(10, 0, 0), 1, 1, glm::vec3(0, 1.75*-.1125, 0));
+	myScene.addPhysObj(&Plane, glm::vec3(0, 0.75, 0), glm::vec3(0, -10, 0),1,1,glm::vec3(1.75*-.1125,0,0));
+	myScene.addPhysObj(&Plane, glm::vec3(0, 0, .75), glm::vec3(0, 10, 0),1,1,glm::vec3(1.75*.1125,0,0));
+	myScene.addPhysObj(&Plane, glm::vec3(1, 0.6, 1), glm::vec3(0, 0, -10));*/
 	
 	//Render Loop
 	while (!glfwWindowShouldClose(window))
@@ -58,10 +86,12 @@ int main()
 		//Clear the screen
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		PhysPlane.applyForce(glm::vec3(.0001, 0, 0));
-		PhysPlane.physUpdate(17);
+		//PhysPlane.applyForce(glm::vec3(.0001, 0, 0));
+		//PhysPlane.physUpdate(17);
 		//Draw all of the Physics objects
-		PhysPlane.draw();
+		//PhysPlane.draw(VMatrix, PMatrix);
+		myScene.physUpdate();
+		myScene.renderUpdate(width, height);
 
 		//Switch which buffer is being drawn to the screen
 		glfwSwapBuffers(window);
@@ -85,4 +115,6 @@ void framebuffer_size_callback(GLFWwindow* window, int w, int h)
 {
 	//Update the size of the context being drawn to if the size of the window changes
 	glViewport(0, 0, w, h);
+	width = w;
+	height = h;
 }

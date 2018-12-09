@@ -123,7 +123,7 @@ void Mesh::createSphere()
 	
 }
 
-void Mesh::draw(glm::vec3 color, glm::vec3 position, glm::vec3 scale)
+void Mesh::draw(glm::vec3 color, glm::vec3 position, glm::vec3 scale,glm::mat4 viewMatrix, glm::mat4 perMatrix)
 {
 	//Check to see if a mesh has been loaded before rendering
 	if (m_loaded)
@@ -135,18 +135,24 @@ void Mesh::draw(glm::vec3 color, glm::vec3 position, glm::vec3 scale)
 		EBO->Bind();
 
 		//Create  the transform matrix described by the provided position and scale
-		glm::mat4 MVMatrix;
+		glm::mat4 MVMatrix = viewMatrix;
 		glm::mat3 NMatrix;
 		MVMatrix = glm::translate(MVMatrix, position);
 		MVMatrix = glm::scale(MVMatrix,scale);
+
 		NMatrix = glm::mat3(MVMatrix);
 		NMatrix = glm::transpose(NMatrix);
+		NMatrix = glm::inverse(NMatrix);
+
+
 
 
 
 		//Send the transform matrix and the color to the shader as uniforms
 		glUniform3f(glGetUniformLocation(m_shader->ID, "color"), color.x, color.y, color.z);
 		glUniformMatrix4fv(glGetUniformLocation(m_shader->ID, "MVMatrix"), 1, GL_FALSE, glm::value_ptr(MVMatrix));
+		glUniformMatrix4fv(glGetUniformLocation(m_shader->ID, "PMatrix"), 1, GL_FALSE, glm::value_ptr(perMatrix));
+		glUniformMatrix4fv(glGetUniformLocation(m_shader->ID, "VMatrix"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
 		glUniformMatrix3fv(glGetUniformLocation(m_shader->ID, "NMatrix"), 1, GL_FALSE, glm::value_ptr(NMatrix));
 
 		//Drawthe shape to the screen
