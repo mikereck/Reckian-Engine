@@ -12,7 +12,7 @@ void main()
 {
 	vec3 normal = vec3(norm);
 	vec3 lightToPos = normalize(lightPos - position);
-	float diffuse = min(max(  200*dot(    normal.xyz,lightToPos.xyz    )/(length(lightPos.xyz - position.xyz)*length(lightPos.xyz-position.xyz)), 0.0    ),.75);
+	float diffuse = min(max(  300*dot(    normal.xyz,lightToPos.xyz    )/(length(lightPos.xyz - position.xyz)*length(lightPos.xyz-position.xyz)), 0.0    ),.75);
 	//diffuse = 0.5;
 	//lightToPos = reflect(lightToPos, fData.normal);
 	//(length(lightPos.xyz - position.xyz)*length(lightPos.xyz-position.xyz))

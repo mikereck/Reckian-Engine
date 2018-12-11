@@ -15,7 +15,7 @@ void main()
 {
 	gl_Position = PMatrix * MVMatrix * vec4(aPos, 1.0);
 	vec4 position4v = (MVMatrix * vec4(aPos, 1.0));
-	vec4 lightPos4v = (VMatrix * vec4(0,0,20,1.0));
+	vec4 lightPos4v = (VMatrix * vec4(0,0,30,1.0));
 	lightPos = lightPos4v.xyz/lightPos4v.w;
 	position = position4v.xyz/position4v.w;
 	norm = normalize(NMatrix * aNor);
